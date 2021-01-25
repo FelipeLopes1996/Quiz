@@ -43,7 +43,7 @@ export default function Home() {
             <p> The title </p>
           </Widget.Header>
           <Widget.Content>
-            <p> content </p>
+            <p> felipe </p>
           </Widget.Content>
         </Widget>
         <Footer />
