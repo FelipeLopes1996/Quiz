@@ -1,11 +1,16 @@
-import { urlObjectKeys } from "next/dist/next-server/lib/utils";
-import styled from "styled-components";
-import db from "../db.json";
-import Widget from "../src/components/widget";
-import QuizLogo from "../src/components/QuizLogo";
-import Footer from "../src/components/footer";
-import GitHubComer from "../src/components/gitHubComer";
-import QuizBackground from "../src/components/quizBackground";
+/* eslint-disable no-undef */
+/* eslint-disable no-console */
+/* eslint-disable react/react-in-jsx-scope */
+import styled from 'styled-components';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import db from '../db.json';
+import Widget from '../src/components/widget';
+import QuizLogo from '../src/components/QuizLogo';
+import Footer from '../src/components/footer';
+import GitHubComer from '../src/components/gitHubComer';
+import QuizBackground from '../src/components/quizBackground';
 
 // const BackgroudImage = styled.div`
 //   background-image: url(${db.bg});
@@ -26,8 +31,14 @@ const QuizContainer = styled.div`
 `;
 
 export default function Home() {
+  const router = useRouter();
+  const [name, setName] = useState('');
   return (
-    <QuizBackground>
+    <QuizBackground backgroundImage={db.bg}>
+      <Head>
+        <title> ALuraQuiz - Modelo Base</title>
+      </Head>
+
       <QuizContainer>
         <QuizLogo />
         <Widget>
@@ -35,7 +46,26 @@ export default function Home() {
             <p> The title </p>
           </Widget.Header>
           <Widget.Content>
-            <p> content </p>
+            <form
+              onSubmit={(info) => {
+                info.preventDefault();
+                router.push(`/quiz?name=${name}`);
+                console.log('fazendo submit');
+              }}
+            >
+              <input
+                placeholder="Digite seu Nome"
+                onChange={(info) => {
+                  // name = info.target.value;
+                  setName(info.target.value);
+                  console.log(info.target.value);
+                }}
+              />
+              <button type="submit" disabled={name.length === 0}>
+                Jogar
+                {name}
+              </button>
+            </form>
           </Widget.Content>
         </Widget>
         <Widget>
